@@ -14,7 +14,7 @@
     <developerConnection>scm:git:</developerConnection>
     <url></url>
   </scm>
-  
+
   <build>
     <plugins>
       <plugin>
@@ -30,7 +30,6 @@
   </build>
 
   <modules>
-    <module>ejb</module>
     <module>war</module>
     <module>ear</module>
   </modules>

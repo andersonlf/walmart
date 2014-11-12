@@ -27,10 +27,6 @@
         <artifactId>maven-ear-plugin</artifactId>
         <configuration>
           <modules>
-            <ejbModule>
-              <groupId>br.com.walmart</groupId>
-              <artifactId>walmart-ejb</artifactId>
-            </ejbModule>
             <webModule>
               <groupId>br.com.walmart</groupId>
               <artifactId>walmart-war</artifactId>
@@ -39,16 +35,18 @@
           </modules>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.wildfly.plugins</groupId>
+        <artifactId>wildfly-maven-plugin</artifactId>
+        <version>1.0.2.Final</version>
+        <configuration>
+          <jboss-home>/home/anderson/homeoffice/apps/wildfly-8.1.0.Final</jboss-home>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
   <dependencies>
-    <dependency>
-      <groupId>br.com.walmart</groupId>
-      <artifactId>walmart-ejb</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-      <type>ejb</type>
-    </dependency>
     <dependency>
       <groupId>br.com.walmart</groupId>
       <artifactId>walmart-war</artifactId>
