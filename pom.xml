@@ -30,6 +30,7 @@
   </build>
 
   <modules>
+    <module>ejb</module>
     <module>war</module>
     <module>ear</module>
   </modules>
