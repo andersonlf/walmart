@@ -40,7 +40,7 @@
         <artifactId>wildfly-maven-plugin</artifactId>
         <version>1.0.2.Final</version>
         <configuration>
-          <jboss-home>/home/anderson/sisbride/apps/wildfly-8.1.0.Final</jboss-home>
+          <jboss-home>${wildfly.home}</jboss-home>
         </configuration>
       </plugin>
     </plugins>
