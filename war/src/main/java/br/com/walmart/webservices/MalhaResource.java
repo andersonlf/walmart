@@ -58,8 +58,8 @@ public class MalhaResource {
 		getLogger().info("> obter");
 		getLogger().info(">> parametros: nome='" + nome + "'");
 		
-		// TODO C obter malha
-		return nome;
+		Malha malha = malhaCrudServico.obter(nome);
+		return malha == null ? "Malha não existe!" : malha.toString();
 	}
 
 	/**
@@ -103,6 +103,7 @@ public class MalhaResource {
 			otrecho.setOrigem(pontos[0]);
 			otrecho.setDestino(pontos[1]);
 			otrecho.setDistancia(Double.parseDouble(pontos[2]));
+			otrecho.setMalha(omalha);
 			
 			trechos.add(otrecho);
 		}
@@ -141,12 +142,12 @@ public class MalhaResource {
 	 */
 	@DELETE
 	@Path("/{nome}")
-	public void excluir(@PathParam("nome") String nome) {
+	public String excluir(@PathParam("nome") String nome) {
 
 		getLogger().info("> atualizar");
 		getLogger().info(">> parametros: nome='" + nome + "'");
-		
-		// TODO C persistir malha
+
+		return malhaCrudServico.exluir(nome) ? "Malha excluída com sucesso!" : "Malha não encontrada!";
 	}
 
 	/*

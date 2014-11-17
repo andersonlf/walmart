@@ -8,11 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,24 +19,11 @@ public class Malha implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idMalha", nullable = false)
-	private Long id;
-
-	@Column(name = "nome", unique = true, nullable = false, insertable = true, updatable = true)
+	@Column(name = "idMalha", unique = true, nullable = false, insertable = true)
 	private String nome;
 
-	@ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "idTrecho", referencedColumnName = "idTrecho", nullable = false)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "malha")
 	private List<Trecho> trechos = new ArrayList<Trecho>();
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getNome() {
 		return nome;
@@ -56,18 +40,18 @@ public class Malha implements Serializable {
 	public void setTrechos(List<Trecho> trechos) {
 		this.trechos = trechos;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Malha [id=" + id + ", nome=" + nome + "]";
+		return "Malha [nome=" + nome + ", trechos=" + trechos + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((trechos == null) ? 0 : trechos.hashCode());
 		return result;
 	}
 
@@ -80,17 +64,17 @@ public class Malha implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Malha other = (Malha) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
+		if (trechos == null) {
+			if (other.trechos != null)
+				return false;
+		} else if (!trechos.equals(other.trechos))
+			return false;
 		return true;
 	}
-	
+
 }

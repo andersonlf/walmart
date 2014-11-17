@@ -3,13 +3,10 @@
  */
 package br.com.walmart.webservices;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
@@ -60,8 +57,6 @@ public class LogisticaResource {
 	 */
 	@GET
 	@Path("/melhorcaminho/{origem}/{detino}/{autonomia}/{valor}")
-	@Consumes(MediaType.TEXT_HTML)
-	@Produces(MediaType.TEXT_PLAIN)
 	public String calcularMelhorCaminho(@PathParam("origem") String origem, 
 			@PathParam("destino") String destino,
 			@PathParam("autonomia") double autonomia,

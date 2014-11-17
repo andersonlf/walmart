@@ -25,6 +25,8 @@ public class MalhaEjb implements IMalha {
 
 	@PersistenceContext(unitName = "emWalmart")
 	private EntityManager entityManager;
+	
+	// TODO M usar dao
 
 	/*
 	 * (non-Javadoc)
