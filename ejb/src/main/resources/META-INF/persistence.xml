@@ -4,8 +4,10 @@
 
   <persistence-unit name="emWalmart" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <jta-data-source>java:/jdbc/WalmartDS</jta-data-source>
+    <jta-data-source>java:jboss/datasources/WalmartDS</jta-data-source>
     
+    <class>br.com.walmart.entidades.Malha</class>
+    <class>br.com.walmart.entidades.Trecho</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>

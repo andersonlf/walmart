@@ -3,17 +3,26 @@
  */
 package br.com.walmart.webservices;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import br.com.walmart.ejb.IMalha;
+import br.com.walmart.entidades.Malha;
+import br.com.walmart.entidades.Trecho;
 
 /**
  * RESTFul Web Services para operações com malhas.
@@ -27,6 +36,9 @@ public class MalhaResource {
 
 	@Context
 	private UriInfo context;
+	
+	@EJB
+	private IMalha malhaCrudServico;
 
 	public MalhaResource() {
 	}
@@ -40,13 +52,14 @@ public class MalhaResource {
 	 *            Nome da malha a ser obtida.
 	 */
 	@GET
-	public String obter(@FormParam("nome") String nome) {
+	@Path("/{nome}")
+	public String obter(@PathParam ("nome") String nome) {
 		
 		getLogger().info("> obter");
-		getLogger().debug("> parametros: nome='" + nome);
+		getLogger().info(">> parametros: nome='" + nome + "'");
 		
 		// TODO C obter malha
-		return null;
+		return nome;
 	}
 
 	/**
@@ -74,14 +87,27 @@ public class MalhaResource {
 			@FormParam("malha") String malha) {
 
 		getLogger().info("> incluir");
-		getLogger().debug("> parametros: nome='" + nome + "' malha='" + malha);
+		getLogger().debug(">> parametros: nome='" + nome + "' malha='" + malha + "'");
+		
+		List<Trecho> trechos = new ArrayList<Trecho>();
+		
+		Malha omalha = new Malha();
+		omalha.setNome(nome);
+		omalha.setTrechos(trechos);
 		
 		String[] linhas = malha.split("\n");
-		for (String string : linhas) {
-			getLogger().info(string);
+		for (String trecho : linhas) {
+			String[] pontos = trecho.split(" ");
+			
+			Trecho otrecho = new Trecho();
+			otrecho.setOrigem(pontos[0]);
+			otrecho.setDestino(pontos[1]);
+			otrecho.setDistancia(Double.parseDouble(pontos[2]));
+			
+			trechos.add(otrecho);
 		}
-
-		// TODO C persistir malha
+		
+		malhaCrudServico.incluir(omalha);
 	}
 
 	/**
@@ -100,7 +126,7 @@ public class MalhaResource {
 			@FormParam("malha") String malha) {
 		
 		getLogger().info("> atualizar");
-		getLogger().debug("> parametros: nome='" + nome + "' malha='" + malha);
+		getLogger().debug(">> parametros: nome='" + nome + "' malha='" + malha + "'");
 		
 		// TODO C persistir malha
 	}
@@ -114,10 +140,11 @@ public class MalhaResource {
 	 *            Nome da malha a ser excluída.
 	 */
 	@DELETE
-	public void excluir(@FormParam("nome") String nome) {
+	@Path("/{nome}")
+	public void excluir(@PathParam("nome") String nome) {
 
 		getLogger().info("> atualizar");
-		getLogger().debug("> parametros: nome='" + nome);
+		getLogger().info(">> parametros: nome='" + nome + "'");
 		
 		// TODO C persistir malha
 	}

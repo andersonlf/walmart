@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 @Path("logistica")
 public class LogisticaResource {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(MalhaResource.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(LogisticaResource.class);
 
 	@Context
 	private UriInfo context;
@@ -61,14 +61,14 @@ public class LogisticaResource {
 	@GET
 	@Path("/melhorcaminho/{origem}/{detino}/{autonomia}/{valor}")
 	@Consumes(MediaType.TEXT_HTML)
-	@Produces(MediaType.TEXT_HTML)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String calcularMelhorCaminho(@PathParam("origem") String origem, 
 			@PathParam("destino") String destino,
 			@PathParam("autonomia") double autonomia,
 			@PathParam("valor") double valor) {
 		
 		getLogger().info("> calcularMelhorCaminho");
-		getLogger().debug("> parametros: origem='" + origem + "' destino='" + destino + "' autonomia='" + autonomia + "' valor='" + valor + "'");
+		getLogger().info(">> parametros: origem='" + origem + "' destino='" + destino + "' autonomia='" + autonomia + "' valor='" + valor + "'");
 
 		// TODO F calcular melhor caminho
 		
