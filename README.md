@@ -35,9 +35,17 @@ Solução
 Aplicativo JEE 7.
 
 
+**Softwares necessários**
+
+  * Wildfly 8.1.0.Final
+  * Apache Maven 3.2.3
+  * H2 Database
+
+
 **Instalação**
 
-Roteiro para instalação.
+  1. Acesse http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip e realize o download do servidor de aplicação Wildfly 8.1.0.Final
+  2. Descompacte o arquivo baixado no diretório /home/user/
 
 
 **Execução**
