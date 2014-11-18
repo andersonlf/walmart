@@ -7,6 +7,7 @@
     <jta-data-source>java:jboss/datasources/WalmartDS</jta-data-source>
     
     <class>br.com.walmart.entidades.Malha</class>
+    <class>br.com.walmart.entidades.Ponto</class>
     <class>br.com.walmart.entidades.Trecho</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 

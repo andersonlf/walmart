@@ -45,7 +45,8 @@ Aplicativo JEE 7.
 **Instalação**
 
   1. Acesse http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip e realize o download do servidor de aplicação Wildfly 8.1.0.Final
-  2. Descompacte o arquivo baixado no diretório /home/user/
+  2. Descompacte o arquivo baixado na raiz do diretório home do usuário. A partir de agora esse diretório será chamado JBOSS_HOME.
+  3.   
 
 
 **Execução**

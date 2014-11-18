@@ -13,7 +13,7 @@ import br.com.walmart.entidades.Malha;
  * 
  * @author andersonlf@gmail.com
  */
-public interface IMalha {
+public interface IMalhaCrud {
 	
 	/**
 	 * Método responsável por incluir uma malha.

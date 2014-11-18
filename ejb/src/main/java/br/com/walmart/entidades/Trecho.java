@@ -1,3 +1,6 @@
+/*
+ * Desenvolvido por Anderson Lobo Feitosa, 2014
+ */
 package br.com.walmart.entidades;
 
 import java.io.Serializable;
@@ -13,6 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Entidade que representa um trecho de uma malha. Um trecho é a ligação entre
+ * dois pontos de uma malha.
+ * 
+ * @author andersonlf@gmail.com
+ */
 @Entity
 @Table(name = "Trecho")
 public class Trecho implements Serializable {
@@ -24,77 +33,121 @@ public class Trecho implements Serializable {
 	@Column(name = "idTrecho", nullable = false)
 	private Long id;
 
-	@Column(name = "origem", nullable = false, insertable = true, updatable = true)
-	private String origem;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "idPontoOrigem", nullable = false, insertable = true, updatable = false)
+	private Ponto pontoOrigem;
 
-	@Column(name = "destino", nullable = false, insertable = true, updatable = true)
-	private String destino;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "idPontoDestino", nullable = false, insertable = true, updatable = false)
+	private Ponto pontoDestino;
 
 	@Column(name = "distancia", nullable = false, insertable = true, updatable = true)
 	private Double distancia;
 
-	@ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "idMalha", nullable = false, insertable = true, updatable = false)
-	private Malha malha;
-
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @return O id.
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @param id
+	 *            O novo id.
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getOrigem() {
-		return origem;
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @return O pontoOrigem.
+	 */
+	public Ponto getPontoOrigem() {
+		return pontoOrigem;
 	}
 
-	public void setOrigem(String origem) {
-		this.origem = origem;
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @param pontoOrigem
+	 *            O novo pontoOrigem.
+	 */
+	public void setPontoOrigem(Ponto pontoOrigem) {
+		this.pontoOrigem = pontoOrigem;
 	}
 
-	public String getDestino() {
-		return destino;
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @return O pontoDestino.
+	 */
+	public Ponto getPontoDestino() {
+		return pontoDestino;
 	}
 
-	public void setDestino(String destino) {
-		this.destino = destino;
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @param pontoDestino
+	 *            O novo pontoDestino.
+	 */
+	public void setPontoDestino(Ponto pontoDestino) {
+		this.pontoDestino = pontoDestino;
 	}
 
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @return O distancia.
+	 */
 	public Double getDistancia() {
 		return distancia;
 	}
 
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @param distancia
+	 *            O novo distancia.
+	 */
 	public void setDistancia(Double distancia) {
 		this.distancia = distancia;
 	}
 
-	public Malha getMalha() {
-		return malha;
-	}
-
-	public void setMalha(Malha malha) {
-		this.malha = malha;
-	}
-
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Trecho [id=" + id + ", origem=" + origem + ", destino="
-				+ destino + ", distancia=" + distancia + "]";
+		return "Trecho [pontoOrigem=" + pontoOrigem + ", pontoDestino="
+				+ pontoDestino + ", distancia=" + distancia + "]";
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((destino == null) ? 0 : destino.hashCode());
 		result = prime * result
 				+ ((distancia == null) ? 0 : distancia.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((origem == null) ? 0 : origem.hashCode());
+		result = prime * result
+				+ ((pontoDestino == null) ? 0 : pontoDestino.hashCode());
+		result = prime * result
+				+ ((pontoOrigem == null) ? 0 : pontoOrigem.hashCode());
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -104,25 +157,20 @@ public class Trecho implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Trecho other = (Trecho) obj;
-		if (destino == null) {
-			if (other.destino != null)
-				return false;
-		} else if (!destino.equals(other.destino))
-			return false;
 		if (distancia == null) {
 			if (other.distancia != null)
 				return false;
 		} else if (!distancia.equals(other.distancia))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (pontoDestino == null) {
+			if (other.pontoDestino != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!pontoDestino.equals(other.pontoDestino))
 			return false;
-		if (origem == null) {
-			if (other.origem != null)
+		if (pontoOrigem == null) {
+			if (other.pontoOrigem != null)
 				return false;
-		} else if (!origem.equals(other.origem))
+		} else if (!pontoOrigem.equals(other.pontoOrigem))
 			return false;
 		return true;
 	}

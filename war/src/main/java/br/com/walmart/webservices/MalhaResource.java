@@ -3,15 +3,10 @@
  */
 package br.com.walmart.webservices;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.EJB;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
@@ -20,9 +15,9 @@ import javax.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.walmart.ejb.IMalha;
+import br.com.walmart.ejb.IMalhaCrud;
 import br.com.walmart.entidades.Malha;
-import br.com.walmart.entidades.Trecho;
+import br.com.walmart.processador.ProcessadorMalhaLogistica;
 
 /**
  * RESTFul Web Services para operações com malhas.
@@ -38,7 +33,7 @@ public class MalhaResource {
 	private UriInfo context;
 	
 	@EJB
-	private IMalha malhaCrudServico;
+	private IMalhaCrud malhaCrudServico;
 
 	public MalhaResource() {
 	}
@@ -54,10 +49,8 @@ public class MalhaResource {
 	@GET
 	@Path("/{nome}")
 	public String obter(@PathParam ("nome") String nome) {
-		
 		getLogger().info("> obter");
 		getLogger().info(">> parametros: nome='" + nome + "'");
-		
 		Malha malha = malhaCrudServico.obter(nome);
 		return malha == null ? "Malha não existe!" : malha.toString();
 	}
@@ -83,72 +76,14 @@ public class MalhaResource {
 	 *            </pre>
 	 */
 	@POST
-	public void incluir(@FormParam("nome") String nome,
-			@FormParam("malha") String malha) {
-
+	public void incluir(@FormParam("nome") String nome, @FormParam("malha") String malha) {
 		getLogger().info("> incluir");
 		getLogger().debug(">> parametros: nome='" + nome + "' malha='" + malha + "'");
-		
-		List<Trecho> trechos = new ArrayList<Trecho>();
-		
-		Malha omalha = new Malha();
-		omalha.setNome(nome);
-		omalha.setTrechos(trechos);
-		
-		String[] linhas = malha.split("\n");
-		for (String trecho : linhas) {
-			String[] pontos = trecho.split(" ");
-			
-			Trecho otrecho = new Trecho();
-			otrecho.setOrigem(pontos[0]);
-			otrecho.setDestino(pontos[1]);
-			otrecho.setDistancia(Double.parseDouble(pontos[2]));
-			otrecho.setMalha(omalha);
-			
-			trechos.add(otrecho);
-		}
-		
-		malhaCrudServico.incluir(omalha);
+		Malha malhaObject = ProcessadorMalhaLogistica.processar(nome, malha);
+		getLogger().debug(">> malha criada: " + malhaObject);
+		malhaCrudServico.incluir(malhaObject);
 	}
 
-	/**
-	 * Método responsável por atualizar uma malha. 
-	 * TODO D situações de erro 
-	 * TODO D limites e valores aceitáveis
-	 * 
-	 * @param nome
-	 *            Nome da malha a ser atualizada.
-	 * @param malha
-	 *            Malha a ser atualizada. Para mais informações sobre o formato 
-	 *            da malha veja {@link #incluir(String, String)}.
-	 */
-	@PUT
-	public void atualizar(@FormParam("nome") String nome,
-			@FormParam("malha") String malha) {
-		
-		getLogger().info("> atualizar");
-		getLogger().debug(">> parametros: nome='" + nome + "' malha='" + malha + "'");
-		
-		// TODO C persistir malha
-	}
-	
-	/**
-	 * Método responsável por excluir uma malha. 
-	 * TODO D situações de erro 
-	 * TODO D limites e valores aceitáveis
-	 * 
-	 * @param nome
-	 *            Nome da malha a ser excluída.
-	 */
-	@DELETE
-	@Path("/{nome}")
-	public String excluir(@PathParam("nome") String nome) {
-
-		getLogger().info("> atualizar");
-		getLogger().info(">> parametros: nome='" + nome + "'");
-
-		return malhaCrudServico.exluir(nome) ? "Malha excluída com sucesso!" : "Malha não encontrada!";
-	}
 
 	/*
 	 * Método JavaBean para obter o logger.

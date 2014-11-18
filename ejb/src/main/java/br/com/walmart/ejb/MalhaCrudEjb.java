@@ -20,8 +20,8 @@ import br.com.walmart.entidades.Malha;
  * @author andersonlf@gmail.com
  */
 @Stateless
-@Local(IMalha.class)
-public class MalhaEjb implements IMalha {
+@Local(IMalhaCrud.class)
+public class MalhaCrudEjb implements IMalhaCrud {
 
 	@PersistenceContext(unitName = "emWalmart")
 	private EntityManager entityManager;
