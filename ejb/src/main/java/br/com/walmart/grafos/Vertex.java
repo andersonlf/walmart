@@ -12,7 +12,7 @@ public class Vertex implements Comparable<Vertex> {
 
 	private List<Edge> edges = new ArrayList<Edge>();
 
-	private Integer id;
+//	private Integer id;
 
 	private String name;
 
@@ -23,7 +23,7 @@ public class Vertex implements Comparable<Vertex> {
 	private String status = GraphUtil.UNVISITED;
 
 	public Vertex(Integer id, String name) {
-		this.id = id;
+//		this.id = id;
 		this.name = name;
 	}
 
@@ -47,13 +47,13 @@ public class Vertex implements Comparable<Vertex> {
 		return edges;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+//	public Integer getId() {
+//		return id;
+//	}
+//
+//	public void setId(Integer id) {
+//		this.id = id;
+//	}
 
 	public Edge insertEdge(Vertex w, Integer o) {
 		Edge e = new Edge();
@@ -78,8 +78,13 @@ public class Vertex implements Comparable<Vertex> {
 
 	@Override
 	public boolean equals(Object obj) {
+//		if (obj instanceof Vertex) {
+//			if (this.id.equals(((Vertex) obj).getId())) {
+//				return true;
+//			}
+//		}
 		if (obj instanceof Vertex) {
-			if (this.id.equals(((Vertex) obj).getId())) {
+			if (this.name.equals(((Vertex) obj).getName())) {
 				return true;
 			}
 		}
@@ -88,7 +93,9 @@ public class Vertex implements Comparable<Vertex> {
 
 	@Override
 	public String toString() {
-		return "(Vertex ID:" + id + "-" + name + ", degree:" + getDegree()
+//		return "(Vertex ID:" + id + "-" + name + ", degree:" + getDegree()
+//				+ ")";
+		return "(Vertex ID:" + name + ", degree:" + getDegree()
 				+ ")";
 	}
 

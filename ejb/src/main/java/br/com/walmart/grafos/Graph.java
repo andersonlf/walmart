@@ -13,9 +13,17 @@ public class Graph {
 	private List<Vertex> vertices = new ArrayList<Vertex>();
 	private List<Edge> edges = new ArrayList<Edge>();
 
-	public Vertex getVertex(Integer id) {
+//	public Vertex getVertex(Integer id) {
+//		for (Vertex v : vertices) {
+//			if (v.getId().equals(id)) {
+//				return v;
+//			}
+//		}
+//		return null;
+//	}
+	public Vertex getVertex(String name) {
 		for (Vertex v : vertices) {
-			if (v.getId().equals(id)) {
+			if (v.getName().equals(name)) {
 				return v;
 			}
 		}
@@ -97,7 +105,10 @@ public class Graph {
 
 	public Vertex insertVertex(Integer id, String name) throws VertexException {
 		for (Vertex vertex : vertices) {
-			if (vertex.getId().equals(id)) {
+//			if (vertex.getId().equals(id)) {
+//				throw new VertexException(VertexException.ID_DUPLICATED, id);
+//			}
+			if (vertex.getName().equals(name)) {
 				throw new VertexException(VertexException.ID_DUPLICATED, id);
 			}
 		}

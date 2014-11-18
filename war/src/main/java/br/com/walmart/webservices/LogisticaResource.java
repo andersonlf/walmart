@@ -3,6 +3,7 @@
  */
 package br.com.walmart.webservices;
 
+import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -11,6 +12,11 @@ import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import br.com.walmart.dto.ParametrosEntrega;
+import br.com.walmart.dto.RotaEntrega;
+import br.com.walmart.ejb.ILogistica;
+import br.com.walmart.exceptions.PontoInexistenteException;
 
 /**
  * RESTFul Web Services para operações logísticas.
@@ -24,6 +30,9 @@ public class LogisticaResource {
 
 	@Context
 	private UriInfo context;
+	
+	@EJB
+	private ILogistica logisticaServico;
 
 	public LogisticaResource() {
 	}
@@ -56,7 +65,7 @@ public class LogisticaResource {
 	 *            Valor do litro de combustível usado pelo veículo de transporte.
 	 */
 	@GET
-	@Path("/melhorcaminho/{origem}/{detino}/{autonomia}/{valor}")
+	@Path("/melhorcaminho/{origem}/{destino}/{autonomia}/{valor}")
 	public String calcularMelhorCaminho(@PathParam("origem") String origem, 
 			@PathParam("destino") String destino,
 			@PathParam("autonomia") double autonomia,
@@ -65,9 +74,22 @@ public class LogisticaResource {
 		getLogger().info("> calcularMelhorCaminho");
 		getLogger().info(">> parametros: origem='" + origem + "' destino='" + destino + "' autonomia='" + autonomia + "' valor='" + valor + "'");
 
-		// TODO F calcular melhor caminho
+		ParametrosEntrega dto = new ParametrosEntrega();
+		dto.setOrigem(origem);
+		dto.setDestino(destino);
+		dto.setAutonomiaVeiculo(autonomia);
+		dto.setValorLitroCombustivel(valor);
 		
-		return null;
+		String retorno = null;
+		try {
+			RotaEntrega rota = logisticaServico.calcularMenorCaminho(dto);
+			retorno = rota.toString();
+			getLogger().info(">> rota: " + retorno);
+		} catch (PontoInexistenteException e) {
+			retorno = e.getMessage();
+		}
+		
+		return retorno;
 	}
 
 	/*

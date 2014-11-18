@@ -5,6 +5,8 @@ package br.com.walmart.ejb;
 
 import br.com.walmart.dto.ParametrosEntrega;
 import br.com.walmart.dto.RotaEntrega;
+import br.com.walmart.entidades.Malha;
+import br.com.walmart.exceptions.PontoInexistenteException;
 
 /**
  * Interface para operações de cálculo do menor caminho.
@@ -24,7 +26,20 @@ public interface ILogistica {
 	 * @return O objeto <code>Rota</code> que contém as informações do menor
 	 *         caminho de entrega e o custo da entrega de acordo com a autonomia
 	 *         do veículo usado para entrega e o valor do combustível.
+	 * @throws PontoInexistenteException 
 	 */
-	public RotaEntrega calcularMenorCaminho(ParametrosEntrega dto);
+	public RotaEntrega calcularMenorCaminho(ParametrosEntrega dto) throws PontoInexistenteException;
+	
+	/**
+	 * Método JavaBean.
+	 * @return O malha.
+	 */
+	public Malha getMalha();
+	
+	/**
+	 * Método JavaBean.
+	 * @param malha O novo malha.
+	 */
+	public void setMalha(Malha malha);
 
 }

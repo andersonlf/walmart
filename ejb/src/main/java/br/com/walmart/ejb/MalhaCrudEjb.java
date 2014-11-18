@@ -6,6 +6,7 @@ package br.com.walmart.ejb;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,14 +27,16 @@ public class MalhaCrudEjb implements IMalhaCrud {
 	@PersistenceContext(unitName = "emWalmart")
 	private EntityManager entityManager;
 	
-	// TODO M usar dao
-
+	@EJB
+	private ILogistica logistica;
+	
 	/*
 	 * (non-Javadoc)
 	 * @see br.com.walmart.ejb.IMalha#incluir(br.com.walmart.entidades.Malha)
 	 */
 	@Override
 	public boolean incluir(Malha malha) {
+		logistica.setMalha(malha);
 		entityManager.persist(malha);
 		return true;
 	}

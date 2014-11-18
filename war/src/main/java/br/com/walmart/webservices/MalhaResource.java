@@ -5,10 +5,8 @@ package br.com.walmart.webservices;
 
 import javax.ejb.EJB;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -38,23 +36,6 @@ public class MalhaResource {
 	public MalhaResource() {
 	}
 	
-	/**
-	 * Método responsável por obter uma malha. 
-	 * TODO D situações de erro 
-	 * TODO D limites e valores aceitáveis
-	 * 
-	 * @param nome
-	 *            Nome da malha a ser obtida.
-	 */
-	@GET
-	@Path("/{nome}")
-	public String obter(@PathParam ("nome") String nome) {
-		getLogger().info("> obter");
-		getLogger().info(">> parametros: nome='" + nome + "'");
-		Malha malha = malhaCrudServico.obter(nome);
-		return malha == null ? "Malha não existe!" : malha.toString();
-	}
-
 	/**
 	 * Método responsável por incluir uma malha. 
 	 * TODO D situações de erro 

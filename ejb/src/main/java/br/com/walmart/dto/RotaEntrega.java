@@ -12,13 +12,18 @@ import java.util.List;
  * @author andersonlf@gmail.com
  */
 public class RotaEntrega {
-	
+
 	private List<String> rota = new ArrayList<String>();
-	
-	private double custoRota = 0;
-	
+
+	private double distanciaRota = 0;
+
+	private double autonomia = 0;
+
+	private double valor = 0;
+
 	/**
 	 * Método JavaBean.
+	 * 
 	 * @return O rota.
 	 */
 	public List<String> getRota() {
@@ -27,7 +32,9 @@ public class RotaEntrega {
 
 	/**
 	 * Método JavaBean.
-	 * @param rota O novo rota.
+	 * 
+	 * @param rota
+	 *            O novo rota.
 	 */
 	public void setRota(List<String> rota) {
 		this.rota = rota;
@@ -35,31 +42,81 @@ public class RotaEntrega {
 
 	/**
 	 * Método JavaBean.
-	 * @return O custoRota.
+	 * 
+	 * @return O distanciaRota.
 	 */
-	public double getCustoRota() {
-		return custoRota;
+	public double getDistanciaRota() {
+		return distanciaRota;
 	}
 
 	/**
 	 * Método JavaBean.
-	 * @param custoRota O novo custoRota.
+	 * 
+	 * @param distanciaRota
+	 *            O novo distanciaRota.
 	 */
-	public void setCustoRota(double custoRota) {
-		this.custoRota = custoRota;
+	public void setDistanciaRota(double distanciaRota) {
+		this.distanciaRota = distanciaRota;
+	}
+
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @return O autonomia.
+	 */
+	public double getAutonomia() {
+		return autonomia;
+	}
+
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @param autonomia
+	 *            O novo autonomia.
+	 */
+	public void setAutonomia(double autonomia) {
+		this.autonomia = autonomia;
+	}
+
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @return O valor.
+	 */
+	public double getValor() {
+		return valor;
+	}
+
+	/**
+	 * Método JavaBean.
+	 * 
+	 * @param valor
+	 *            O novo valor.
+	 */
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Rota [rota=" + rota + ", custoRota=" + custoRota + "]";
+		StringBuilder sb = new StringBuilder();
+		for (String s : rota) {
+			sb.append(s);
+			sb.append(" ");
+		}
+		sb.append(distanciaRota == 0 ? "0" : (distanciaRota / autonomia) * valor);
+
+		return sb.toString();
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -67,14 +124,19 @@ public class RotaEntrega {
 		final int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(custoRota);
+		temp = Double.doubleToLongBits(autonomia);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(distanciaRota);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((rota == null) ? 0 : rota.hashCode());
+		temp = Double.doubleToLongBits(valor);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -86,15 +148,21 @@ public class RotaEntrega {
 		if (getClass() != obj.getClass())
 			return false;
 		RotaEntrega other = (RotaEntrega) obj;
-		if (Double.doubleToLongBits(custoRota) != Double
-				.doubleToLongBits(other.custoRota))
+		if (Double.doubleToLongBits(autonomia) != Double
+				.doubleToLongBits(other.autonomia))
+			return false;
+		if (Double.doubleToLongBits(distanciaRota) != Double
+				.doubleToLongBits(other.distanciaRota))
 			return false;
 		if (rota == null) {
 			if (other.rota != null)
 				return false;
 		} else if (!rota.equals(other.rota))
 			return false;
+		if (Double.doubleToLongBits(valor) != Double
+				.doubleToLongBits(other.valor))
+			return false;
 		return true;
 	}
-	
+
 }

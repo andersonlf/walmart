@@ -28,7 +28,8 @@ public class GraphUtil {
 
 	public static void dethFirstSearch(Vertex vertex) throws VertexException {
 		System.out.println("\nDETH FIRST SEARCH on GRAPH");
-		System.out.print("START V:" + vertex.getId() + "-" + vertex.getName());
+//		System.out.print("START V:" + vertex.getId() + "-" + vertex.getName());
+		System.out.print("START V:" + vertex.getName());
 		vertex.setStatus(VISITED);
 		executeDethFirstSearch(vertex);
 	}
@@ -46,16 +47,20 @@ public class GraphUtil {
 						System.out.println();
 						go = false;
 					}
+//					System.out.print("-> GO E:" + edge.getWeigth() + " V:"
+//							+ w.getId() + "-" + w.getName() + " ");
 					System.out.print("-> GO E:" + edge.getWeigth() + " V:"
-							+ w.getId() + "-" + w.getName() + " ");
+							+ w.getName() + " ");
 					back = true;
 					executeDethFirstSearch(w);
 					if (back) {
 						System.out.println();
 						back = false;
 					}
+//					System.out.print("-> BACK E:" + edge.getWeigth() + " V:"
+//							+ vertex.getId() + "-" + vertex.getName() + " ");
 					System.out.print("-> BACK E:" + edge.getWeigth() + " V:"
-							+ vertex.getId() + "-" + vertex.getName() + " ");
+							+ vertex.getName() + " ");
 					go = true;
 				}
 			}
@@ -66,11 +71,14 @@ public class GraphUtil {
 		System.out.println("\n\nBREATH FIRST SEARCH on GRAPH");
 		Queue<Vertex> queue = new LinkedList<Vertex>();
 		queue.add(vertex);
+//		System.out
+//				.print("START = V:" + vertex.getId() + "-" + vertex.getName());
 		System.out
-				.print("START = V:" + vertex.getId() + "-" + vertex.getName());
+		.print("START = V:" + vertex.getName());
 		while (!queue.isEmpty()) {
 			Vertex v = queue.remove();
-			System.out.print("\nBACK = V:" + v.getId() + "-" + v.getName());
+//			System.out.print("\nBACK = V:" + v.getId() + "-" + v.getName());
+			System.out.print("\nBACK = V:" + v.getName());
 			for (Edge e : v.getEdges()) {
 				if (e.getStatus().equals(UNVISITED)) {
 					Vertex w = Graph.opposite(v, e);
@@ -78,8 +86,10 @@ public class GraphUtil {
 						e.setStatus(VISITED);
 						w.setStatus(VISITED);
 						queue.add(w);
+//						System.out.print(" -> GO = E:" + e.getWeigth() + " V:"
+//								+ w.getId() + "-" + w.getName());
 						System.out.print(" -> GO = E:" + e.getWeigth() + " V:"
-								+ w.getId() + "-" + w.getName());
+								+ w.getName());
 					}
 				}
 			}

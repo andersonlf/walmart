@@ -45,10 +45,31 @@ Aplicativo JEE 7.
 **Instalação**
 
   1. Acesse http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip e realize o download do servidor de aplicação Wildfly 8.1.0.Final
-  2. Descompacte o arquivo baixado na raiz do diretório home do usuário. A partir de agora esse diretório será chamado JBOSS_HOME.
-  3.   
+  1. Descompacte o arquivo baixado na raiz do diretório home do usuário. A partir de agora esse diretório será chamado JBOSS_HOME.
+  1. 
 
 
 **Execução**
 
 Como executar.
+
+
+**TODO**
+
+  1. Alterar o algoritmo de dijkstra
+  1. Tratar exceção quando uma malha já estiver incluída
+  1. Tratar exceção quando não existir malha cadastrada
+  1. Criar DAO
+  1. Criar script DDL de banco de dados
+  1. Explicar a arquitetura
+  1. Tutorial sobre como instalar:
+    * como configurar o banco
+    * como criar datasource
+    * como implantar o artefato
+  1. Tutorial sobre como executar: 
+    * informando os links dos web services
+    * informando os parametros
+  1. Escrever premissas e suposições
+  1. Melhorar javadoc
+  1. Criar teste unitários para os webservices
+  

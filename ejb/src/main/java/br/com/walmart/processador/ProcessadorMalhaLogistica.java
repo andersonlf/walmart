@@ -17,9 +17,13 @@ import br.com.walmart.entidades.Trecho;
  *
  * @author andersonlf@gmail.com
  */
-public class ProcessadorMalhaLogistica {
-	
-	private static final Pattern FORMATO_MALHA_VALIDO = Pattern.compile("(.\\s+.\\s+\\d+\\s*\n?)+"); 
+public final class ProcessadorMalhaLogistica {
+
+	public ProcessadorMalhaLogistica() {
+	}
+
+	private static final Pattern FORMATO_MALHA_VALIDO = Pattern
+			.compile("(.\\s+.\\s+\\d+\\s*\n?)+");
 
 	/**
 	 * Factory Method para criação de uma malha logística.
@@ -28,7 +32,6 @@ public class ProcessadorMalhaLogistica {
 	 *            Nome da malha a ser criada.
 	 * @param malha
 	 *            Malha logística propriamente dita no formato abaixo.
-	 * 
 	 *            <pre>
 	 *            A B 10
 	 *            B D 15
@@ -36,7 +39,7 @@ public class ProcessadorMalhaLogistica {
 	 *            C D 30
 	 *            B E 50
 	 *            D E 30
-	 * </pre>
+	 *            </pre>
 	 * @return Uma malha logística de acordo com os parâmetros informados.
 	 */
 	public static Malha processar(String nome, String malha) {
@@ -82,10 +85,15 @@ public class ProcessadorMalhaLogistica {
 	 * @return <code>true</code> se os parâmetros são válidos.
 	 */
 	private static boolean parametrosValidos(String nome, String malha) {
-		if (nome == null || malha == null || nome.length() == 0 || malha.length() == 0 || !FORMATO_MALHA_VALIDO.matcher(malha).matches()) {
+		if (nome == null 
+				|| malha == null 
+				|| nome.length() == 0
+				|| malha.length() == 0
+				|| !FORMATO_MALHA_VALIDO.matcher(malha).matches()) {
+			
 			return false;
 		}
-		
+
 		return true;
 	}
 
