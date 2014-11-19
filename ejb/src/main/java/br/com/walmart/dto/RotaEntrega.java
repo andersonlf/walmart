@@ -11,7 +11,9 @@ import java.util.List;
  * 
  * @author andersonlf@gmail.com
  */
-public class RotaEntrega {
+public class RotaEntrega extends WalmartDto {
+
+	private static final long serialVersionUID = 1L;
 
 	private List<String> rota = new ArrayList<String>();
 

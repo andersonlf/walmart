@@ -12,15 +12,12 @@
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     <properties>
-      <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+      <property name="hibernate.hbm2ddl.auto" value="validate" />
       <property name="hibernate.show_sql" value="true" />
       <property name="hibernate.format_sql" value="true" />
       <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.BTMTransactionManagerLookup" />
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
       <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
-      <property name="hibernate.connection.url" value="jdbc:h2:tcp://localhost//home/anderson/test" />
-      <property name="hibernate.connection.username" value="sa" />
-      <property name="hibernate.connection.password" value="sa" />
     </properties>
   </persistence-unit>
 

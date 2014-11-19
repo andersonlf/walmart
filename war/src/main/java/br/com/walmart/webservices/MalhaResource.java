@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import br.com.walmart.ejb.IMalhaCrudServico;
 import br.com.walmart.entidades.Malha;
-import br.com.walmart.exceptions.MalhaJaExisteException;
+import br.com.walmart.exceptions.WalmartException;
 import br.com.walmart.processador.ProcessadorMalhaLogistica;
 
 /**
@@ -68,7 +68,7 @@ public class MalhaResource {
 		try {
 			malhaCrudServico.incluir(malhaObject);
 			retorno = "Malha incluída com sucesso!";
-		} catch (MalhaJaExisteException e) {
+		} catch (WalmartException e) {
 			retorno = e.getMessage();
 			getLogger().error(e.getMessage(), e);
 		}

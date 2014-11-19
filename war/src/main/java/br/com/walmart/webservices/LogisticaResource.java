@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import br.com.walmart.dto.ParametrosEntrega;
 import br.com.walmart.dto.RotaEntrega;
 import br.com.walmart.ejb.ILogisticaServico;
-import br.com.walmart.exceptions.PontoInexistenteException;
+import br.com.walmart.exceptions.WalmartException;
 
 /**
  * RESTFul Web Services para operações logísticas.
@@ -85,7 +85,7 @@ public class LogisticaResource {
 			RotaEntrega rota = logisticaServico.calcularRotaMenorCusto(dto);
 			retorno = rota.toString();
 			getLogger().info(">> rota: " + retorno);
-		} catch (PontoInexistenteException e) {
+		} catch (WalmartException e) {
 			retorno = e.getMessage();
 		}
 		

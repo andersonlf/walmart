@@ -3,66 +3,39 @@
  */
 package br.com.walmart.dao;
 
-import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.persistence.Query;
 
 import br.com.walmart.entidades.Malha;
+import br.com.walmart.exceptions.WalmartException;
 
 /**
  * A implementação de um DAO para manipular malhas.
  *
  * @author andersonlf@gmail.com
  */
-public class MalhaCrudDao implements IMalhaCrudDao {
+public class MalhaCrudDao extends WalmartCrudDaoAbstract<Malha> implements IMalhaCrudDao {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(MalhaCrudDao.class);
-
-	private EntityManager em;
-
-	/**
-	 * Cria um <code>MalhaCrudDao</code> com um <code>EntityManager</code>.
-	 * 
-	 * @param em
-	 *            O <code>EntityManager</code> para realizar as operações de
-	 *            persistência.
-	 */
 	public MalhaCrudDao(EntityManager em) {
-		this.em = em;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.com.walmart.dao.IMalhaCrudDao#incluir(br.com.walmart.entidades.Malha)
-	 */
-	@Override
-	public void incluir(Malha malha) {
-		getLogger().info("Malha '" + malha.toString() + "' persistida.");
-		em.persist(malha);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.com.walmart.dao.IMalhaCrudDao#obter(java.io.Serializable)
-	 */
-	@Override
-	public Malha obter(Serializable chave) {
-		getLogger().info("Recuperando malha '" + chave + "' do banco de dados.");
-		return em.find(Malha.class, chave);
+		super(Malha.class, em);
 	}
 	
-	/*
-	 * Método JavaBean para obter o logger.
-	 * @return O logger desta classe.
+	/* (non-Javadoc)
+	 * @see br.com.walmart.dao.WalmartCrudDaoAbstract#verificarDuplicidade(br.com.walmart.entidades.WalmartEntidade)
 	 */
-	public static Logger getLogger() {
-		return LOGGER;
+	@Override
+	@SuppressWarnings("unchecked")
+	protected void verificarDuplicidade(Malha objeto) throws WalmartException {
+		Query query = getEntityManager().createNamedQuery("findMalhaByNome");
+		query.setParameter("nome", objeto.getNome());
+
+		List<Malha> malhas = query.getResultList();
+		
+		if (malhas.size() > 0) {
+			throw new WalmartException("Malha '" + objeto.getNome() + "' já está cadastrada!");
+		}
 	}
 
 }

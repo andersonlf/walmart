@@ -3,7 +3,6 @@
  */
 package br.com.walmart.entidades;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,16 +25,20 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Ponto")
-public class Ponto implements Serializable {
+public class Ponto extends WalmartEntidade {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
-	@Column(name = "idPonto", unique = true, nullable = false, insertable = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idPonto")
+	private Long id;
+	
+	@Column(name = "nome")
 	private String nome;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "idMalha", nullable = false, insertable = true, updatable = false)
+	@JoinColumn(name = "idMalha")
 	private Malha malha;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pontoOrigem")
@@ -41,7 +46,22 @@ public class Ponto implements Serializable {
 
 	/**
 	 * Método JavaBean.
-	 * 
+	 * @return O id.
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * Método JavaBean.
+	 * @param id O novo id.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * Método JavaBean.
 	 * @return O nome.
 	 */
 	public String getNome() {
@@ -50,9 +70,7 @@ public class Ponto implements Serializable {
 
 	/**
 	 * Método JavaBean.
-	 * 
-	 * @param nome
-	 *            O novo nome.
+	 * @param nome O novo nome.
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -60,7 +78,6 @@ public class Ponto implements Serializable {
 
 	/**
 	 * Método JavaBean.
-	 * 
 	 * @return O malha.
 	 */
 	public Malha getMalha() {
@@ -69,9 +86,7 @@ public class Ponto implements Serializable {
 
 	/**
 	 * Método JavaBean.
-	 * 
-	 * @param malha
-	 *            O novo malha.
+	 * @param malha O novo malha.
 	 */
 	public void setMalha(Malha malha) {
 		this.malha = malha;
@@ -79,7 +94,6 @@ public class Ponto implements Serializable {
 
 	/**
 	 * Método JavaBean.
-	 * 
 	 * @return O trechos.
 	 */
 	public List<Trecho> getTrechos() {
@@ -88,9 +102,7 @@ public class Ponto implements Serializable {
 
 	/**
 	 * Método JavaBean.
-	 * 
-	 * @param trechos
-	 *            O novo trechos.
+	 * @param trechos O novo trechos.
 	 */
 	public void setTrechos(List<Trecho> trechos) {
 		this.trechos = trechos;
@@ -101,7 +113,7 @@ public class Ponto implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Ponto [nome=" + nome + "]";
+		return "Ponto [id=" + id + ", nome=" + nome + "]";
 	}
 
 	/* (non-Javadoc)
@@ -111,6 +123,7 @@ public class Ponto implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
@@ -134,5 +147,39 @@ public class Ponto implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+	/**
+	 * TODO
+	 * @param trecho
+	 * @return
+	 */
+	public boolean contemTrecho(Trecho trecho) {
+		return getTrechos().contains(trecho);
+	}
+
+	/**
+	 * TODO
+	 * @param trecho
+	 */
+	public void addTrecho(Trecho trecho) {
+		getTrechos().add(trecho);
+	}
+
+	/**
+	 * TODO
+	 * @param nome2
+	 * @param nome3
+	 * @return
+	 */
+	public Trecho obterTrecho(String origem, String destino) {
+		for (Trecho trecho : trechos) {
+			if (trecho.getPontoDestino().getNome().equals(destino) 
+					&& trecho.getPontoOrigem().getNome().equals(origem)) {
+				return trecho;
+			}
+		}
+		
+		return null;
+	}
+
 }

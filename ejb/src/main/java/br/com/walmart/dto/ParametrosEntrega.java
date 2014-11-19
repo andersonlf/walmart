@@ -8,12 +8,14 @@ package br.com.walmart.dto;
  * 
  * @author andersonlf@gmail.com
  */
-public class ParametrosEntrega {
+public class ParametrosEntrega extends WalmartDto {
 	
+	private static final long serialVersionUID = 1L;
+
 	private String origem;
 	
 	private String destino;
-	
+
 	private double autonomiaVeiculo;
 	
 	private double valorLitroCombustivel;
@@ -49,7 +51,7 @@ public class ParametrosEntrega {
 	public void setDestino(String destino) {
 		this.destino = destino;
 	}
-
+	
 	/**
 	 * Método JavaBean.
 	 * @return O autonomiaVeiculo.
@@ -82,19 +84,17 @@ public class ParametrosEntrega {
 		this.valorLitroCombustivel = valorLitroCombustivel;
 	}
 
-	/* 
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "InformacaoEntrega [origem=" + origem + ", destino=" + destino
-				+ ", autonomiaVeiculo=" + autonomiaVeiculo
-				+ ", valorLitroCombustivel=" + valorLitroCombustivel + "]";
+		return "ParametrosEntrega [origem=" + origem + ", destino=" + destino
+				+ ", autonomiaVeiculo="	+ autonomiaVeiculo + 
+				", valorLitroCombustivel=" + valorLitroCombustivel + "]";
 	}
 
-	/* 
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -111,8 +111,7 @@ public class ParametrosEntrega {
 		return result;
 	}
 
-	/* 
-	 * (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

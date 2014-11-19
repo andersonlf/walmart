@@ -3,8 +3,6 @@
  */
 package br.com.walmart.entidades;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,24 +22,24 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Trecho")
-public class Trecho implements Serializable {
+public class Trecho extends WalmartEntidade {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idTrecho", nullable = false)
+	@Column(name = "idTrecho")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "idPontoOrigem", nullable = false, insertable = true, updatable = false)
+	@JoinColumn(name = "idPontoOrigem")
 	private Ponto pontoOrigem;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "idPontoDestino", nullable = false, insertable = true, updatable = false)
+	@JoinColumn(name = "idPontoDestino")
 	private Ponto pontoDestino;
 
-	@Column(name = "distancia", nullable = false, insertable = true, updatable = true)
+	@Column(name = "distancia")
 	private Double distancia;
 
 	/**
@@ -157,11 +155,6 @@ public class Trecho implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Trecho other = (Trecho) obj;
-		if (distancia == null) {
-			if (other.distancia != null)
-				return false;
-		} else if (!distancia.equals(other.distancia))
-			return false;
 		if (pontoDestino == null) {
 			if (other.pontoDestino != null)
 				return false;

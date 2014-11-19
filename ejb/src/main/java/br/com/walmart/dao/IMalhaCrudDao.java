@@ -3,8 +3,6 @@
  */
 package br.com.walmart.dao;
 
-import java.io.Serializable;
-
 import br.com.walmart.entidades.Malha;
 
 /**
@@ -12,10 +10,6 @@ import br.com.walmart.entidades.Malha;
  *
  * @author andersonlf@gmail.com
  */
-public interface IMalhaCrudDao {
+public interface IMalhaCrudDao extends IWalmartCrudDao<Malha> {
 	
-	public void incluir(Malha malha);
-	
-	public Malha obter(Serializable chave);
-
 }

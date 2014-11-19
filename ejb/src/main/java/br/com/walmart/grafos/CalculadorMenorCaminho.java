@@ -13,7 +13,7 @@ import br.com.walmart.dto.RotaEntrega;
 import br.com.walmart.entidades.Malha;
 import br.com.walmart.entidades.Ponto;
 import br.com.walmart.entidades.Trecho;
-import br.com.walmart.exceptions.PontoInexistenteException;
+import br.com.walmart.exceptions.WalmartException;
 
 /**
  * Calculador utilitária que implementa o algoritmo de menor caminho de
@@ -26,7 +26,7 @@ public class CalculadorMenorCaminho {
 	/**
 	 * Calcula o menor caminho dos pontos especificados no <code>dto</code>. A
 	 * malha especificada deve conter os pontos de origem e destino, caso
-	 * contrário a excecão <code>PontoInexistenteException</code> será lançada.
+	 * contrário a excecão <code>WalmartException</code> será lançada.
 	 * 
 	 * @param malha
 	 *            A malha logística.
@@ -35,12 +35,12 @@ public class CalculadorMenorCaminho {
 	 * @return O objeto <code>RotaEntrega</code> que contém os pontos, a
 	 *         distância e o custo total da rota.
 	 * 
-	 * @throws PontoInexistenteException
+	 * @throws WalmartException
 	 *             Lançada caso o ponto de origem ou destino não pertençam a
-	 *             malha logística.
+	 *             malha logística ou caso não exista rota entre os pontos.
 	 */
 	public static RotaEntrega calcularMenorCaminho(Malha malha,
-			ParametrosEntrega dto) throws PontoInexistenteException {
+			ParametrosEntrega dto) throws WalmartException {
 
 		RotaEntrega rota = new RotaEntrega();
 		rota.setAutonomia(dto.getAutonomiaVeiculo());
@@ -61,17 +61,17 @@ public class CalculadorMenorCaminho {
 	 * 
 	 * @return O ponto com o nome especificado.
 	 * 
-	 * @throws PontoInexistenteException Lançada caso o ponto não exista.
+	 * @throws WalmartException Lançada caso o ponto não exista.
 	 */
 	private static Ponto obterPonto(Malha malha, String nomePonto)
-			throws PontoInexistenteException {
+			throws WalmartException {
 		for (Ponto ponto : malha.getPontos()) {
 			if (ponto.getNome().equals(nomePonto)) {
 				return ponto;
 			}
 		}
 
-		throw new PontoInexistenteException("O ponto '" + nomePonto
+		throw new WalmartException("O ponto '" + nomePonto
 				+ "' especificado não existe!");
 	}
 
@@ -85,9 +85,11 @@ public class CalculadorMenorCaminho {
 	 * @param malha A malha que contém os dois pontos.
 	 * 
 	 * @return A rota com o menor caminho e o custo.
+	 * 
+	 * @throws WalmartException Lançada caso não exista rota entre os pontos.
 	 */
 	private static RotaEntrega calcularMenorCaminhoEntrePontos(Ponto origem,
-			Ponto destino, Malha malha, RotaEntrega rota) {
+			Ponto destino, Malha malha, RotaEntrega rota) throws WalmartException {
 
 		List<Ponto> visitados = new ArrayList<Ponto>(malha.getPontos());
 		Map<Ponto, Double> distancias = criarMapaDistancias(malha.getPontos());
@@ -100,6 +102,11 @@ public class CalculadorMenorCaminho {
 		calcularDistanciasAntecessores(origem, distancias, antecessores);
 		while (!visitados.isEmpty()) {
 			Ponto pontoMenorDistancia = recuperarPontoMenorDistancia(distancias, visitados);
+			
+			if (pontoMenorDistancia == null) {
+				throw new WalmartException("Não existe rota da origem '" + origem + "' para o destino '" + destino + "'!");
+			}
+			
 			calcularDistanciasAntecessores(pontoMenorDistancia, distancias,
 					antecessores);
 			visitados.remove(pontoMenorDistancia);
@@ -114,23 +121,7 @@ public class CalculadorMenorCaminho {
 
 		return rota;
 	}
-
-	/*
-	 * Inicializa o mapa de distancias com o maior valor possível.
-	 * 
-	 * @param pontos Pontos que serão inseridos no mapa.
-	 * 
-	 * @return Um mapa com todos os pontos e a maior distância possível para
-	 * eles.
-	 */
-	private static Map<Ponto, Double> criarMapaDistancias(List<Ponto> pontos) {
-		Map<Ponto, Double> distancias = new HashMap<Ponto, Double>();
-		for (Ponto ponto : pontos) {
-			distancias.put(ponto, Double.MAX_VALUE);
-		}
-		return distancias;
-	}
-
+	
 	/*
 	 * Calcula a menor estimativa dos pontos especificados.
 	 * 
@@ -153,7 +144,7 @@ public class CalculadorMenorCaminho {
 		}
 		return candidato;
 	}
-
+	
 	/*
 	 * Calcula a distancia do ponto especificado para os seus trechos. Atualiza
 	 * se necessário o mapa de distâncias e precedentes.
@@ -179,6 +170,22 @@ public class CalculadorMenorCaminho {
 				precedentes.put(outroPonto, ponto);
 			}
 		}
+	}
+
+	/*
+	 * Inicializa o mapa de distancias com o maior valor possível.
+	 * 
+	 * @param pontos Pontos que serão inseridos no mapa.
+	 * 
+	 * @return Um mapa com todos os pontos e a maior distância possível para
+	 * eles.
+	 */
+	private static Map<Ponto, Double> criarMapaDistancias(List<Ponto> pontos) {
+		Map<Ponto, Double> distancias = new HashMap<Ponto, Double>();
+		for (Ponto ponto : pontos) {
+			distancias.put(ponto, Double.MAX_VALUE);
+		}
+		return distancias;
 	}
 
 }

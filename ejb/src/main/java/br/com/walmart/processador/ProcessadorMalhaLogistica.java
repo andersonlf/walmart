@@ -5,6 +5,7 @@ package br.com.walmart.processador;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -23,7 +24,8 @@ public final class ProcessadorMalhaLogistica {
 	}
 
 	/**
-	 * Expressão regular para representar a <code>String</code> de uma malha logística.
+	 * Expressão regular para representar a <code>String</code> de uma malha
+	 * logística.
 	 */
 	private static final Pattern FORMATO_MALHA_VALIDO = Pattern
 			.compile("(.\\s+.\\s+\\d+\\s*\n?)+");
@@ -35,6 +37,7 @@ public final class ProcessadorMalhaLogistica {
 	 *            Nome da malha a ser criada.
 	 * @param malha
 	 *            Malha logística propriamente dita no formato abaixo.
+	 * 
 	 *            <pre>
 	 *            A B 10
 	 *            B D 15
@@ -42,7 +45,7 @@ public final class ProcessadorMalhaLogistica {
 	 *            C D 30
 	 *            B E 50
 	 *            D E 30
-	 *            </pre>
+	 * </pre>
 	 * @return Uma malha logística de acordo com os parâmetros informados.
 	 */
 	public static Malha processar(String nome, String malha) {
@@ -65,8 +68,13 @@ public final class ProcessadorMalhaLogistica {
 				Ponto pontoDestino = criarPonto(destino, malhaObject, pontos);
 				pontos.put(destino, pontoDestino);
 
-				pontoOrigem.getTrechos().add(
-						criarTrecho(pontoOrigem, pontoDestino, distancia));
+				Trecho trecho = recuperarTrechoExistente(pontoOrigem,
+						pontoDestino, distancia);
+
+				if (trecho == null) {
+					pontoOrigem.getTrechos().add(
+							criarTrecho(pontoOrigem, pontoDestino, distancia));
+				}
 			}
 
 			for (Ponto ponto : pontos.values()) {
@@ -75,6 +83,29 @@ public final class ProcessadorMalhaLogistica {
 		}
 
 		return malhaObject;
+	}
+
+	/*
+	 * Atualiza um trecho caso exista. Um trecho existe se algum trecho do ponto
+	 * de origem tem o mesmo destino.
+	 * 
+	 * @param pontoOrigem O ponto de origem do trecho.
+	 * @param pontoDestino O ponto de destino do trecho.
+	 * @param distancia A nova distância para o trecho.
+	 * @return O trecho encontrado ou null caso não exista.
+	 */
+	private static Trecho recuperarTrechoExistente(Ponto pontoOrigem,
+			Ponto pontoDestino, double distancia) {
+		for (Trecho trecho : pontoOrigem.getTrechos()) {
+			if (trecho.getPontoOrigem().getNome().equals(pontoOrigem.getNome())
+					&& trecho.getPontoDestino().getNome()
+							.equals(pontoDestino.getNome())) {
+				trecho.setDistancia(distancia);
+				return trecho;
+			}
+		}
+
+		return null;
 	}
 
 	/*
@@ -88,12 +119,10 @@ public final class ProcessadorMalhaLogistica {
 	 * @return <code>true</code> se os parâmetros são válidos.
 	 */
 	private static boolean parametrosValidos(String nome, String malha) {
-		if (nome == null 
-				|| malha == null 
-				|| nome.length() == 0
+		if (nome == null || malha == null || nome.length() == 0
 				|| malha.length() == 0
 				|| !FORMATO_MALHA_VALIDO.matcher(malha).matches()) {
-			
+
 			return false;
 		}
 
@@ -157,6 +186,48 @@ public final class ProcessadorMalhaLogistica {
 		malha.setDataHoraInclusao(new Date());
 		malha.setDataHoraUltimaAtualizacao(new Date());
 		return malha;
+	}
+
+	/**
+	 * Processa as malhas especificadas transformando-as em uma única malha.
+	 * 
+	 * @param malhas As malhas que serão unificadas.
+	 * @return A malha unificada.
+	 */
+	public static Malha processar(List<Malha> malhas) {
+		Malha malhaUnificada = new Malha();
+
+		if (malhas.isEmpty()) {
+			return malhaUnificada;
+		}
+		
+		malhaUnificada = malhas.get(0);
+		Malha malha = null;
+		Ponto pontoMalhaUnificada = null;
+		Trecho trechoMalhaUnificada = null;
+		for (int i = malhas.size()-1; i >= 1; i--) {
+			malha = malhas.get(i);
+			
+			for (Ponto ponto : malha.getPontos()) {
+				if (!malhaUnificada.contemPonto(ponto)) {
+					malhaUnificada.addPonto(ponto);
+				} else {
+					pontoMalhaUnificada = malhaUnificada.obterPonto(ponto.getNome());
+					for(Trecho trecho : ponto.getTrechos()) {
+						if (!pontoMalhaUnificada.contemTrecho(trecho)) {
+							pontoMalhaUnificada.addTrecho(trecho);
+						} else {
+							trechoMalhaUnificada = pontoMalhaUnificada.obterTrecho(trecho.getPontoOrigem().getNome(), trecho.getPontoDestino().getNome());
+							if (trechoMalhaUnificada.getDistancia() > trecho.getDistancia()) {
+								trechoMalhaUnificada.setDistancia(trecho.getDistancia());
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return malhaUnificada;
 	}
 
 }
