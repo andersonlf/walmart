@@ -22,6 +22,9 @@ public final class ProcessadorMalhaLogistica {
 	public ProcessadorMalhaLogistica() {
 	}
 
+	/**
+	 * Expressão regular para representar a <code>String</code> de uma malha logística.
+	 */
 	private static final Pattern FORMATO_MALHA_VALIDO = Pattern
 			.compile("(.\\s+.\\s+\\d+\\s*\n?)+");
 

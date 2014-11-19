@@ -13,8 +13,9 @@ import javax.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.walmart.ejb.IMalhaCrud;
+import br.com.walmart.ejb.IMalhaCrudServico;
 import br.com.walmart.entidades.Malha;
+import br.com.walmart.exceptions.MalhaJaExisteException;
 import br.com.walmart.processador.ProcessadorMalhaLogistica;
 
 /**
@@ -31,7 +32,7 @@ public class MalhaResource {
 	private UriInfo context;
 	
 	@EJB
-	private IMalhaCrud malhaCrudServico;
+	private IMalhaCrudServico malhaCrudServico;
 
 	public MalhaResource() {
 	}
@@ -57,12 +58,22 @@ public class MalhaResource {
 	 *            </pre>
 	 */
 	@POST
-	public void incluir(@FormParam("nome") String nome, @FormParam("malha") String malha) {
+	public String incluir(@FormParam("nome") String nome, @FormParam("malha") String malha) {
 		getLogger().info("> incluir");
 		getLogger().debug(">> parametros: nome='" + nome + "' malha='" + malha + "'");
 		Malha malhaObject = ProcessadorMalhaLogistica.processar(nome, malha);
 		getLogger().debug(">> malha criada: " + malhaObject);
-		malhaCrudServico.incluir(malhaObject);
+		
+		String retorno = null;
+		try {
+			malhaCrudServico.incluir(malhaObject);
+			retorno = "Malha incluída com sucesso!";
+		} catch (MalhaJaExisteException e) {
+			retorno = e.getMessage();
+			getLogger().error(e.getMessage(), e);
+		}
+		
+		return retorno;
 	}
 
 

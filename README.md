@@ -37,6 +37,7 @@ Aplicativo JEE 7.
 
 **Softwares necessários**
 
+  * Oracle JDK 8
   * Wildfly 8.1.0.Final
   * Apache Maven 3.2.3
   * H2 Database
@@ -56,10 +57,6 @@ Como executar.
 
 **TODO**
 
-  1. Alterar o algoritmo de dijkstra
-  1. Tratar exceção quando uma malha já estiver incluída
-  1. Tratar exceção quando não existir malha cadastrada
-  1. Criar DAO
   1. Criar script DDL de banco de dados
   1. Explicar a arquitetura
   1. Tutorial sobre como instalar:
@@ -70,6 +67,13 @@ Como executar.
     * informando os links dos web services
     * informando os parametros
   1. Escrever premissas e suposições
-  1. Melhorar javadoc
   1. Criar teste unitários para os webservices
+  
+
+**Concluídos**
+  1. Criar DAO
+  1. Alterar o algoritmo de dijkstra
+  1. Tratar exceção quando uma malha já estiver incluída
+  1. Tratar exceção quando não existir malha cadastrada
+  1. Melhorar javadoc
   

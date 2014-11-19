@@ -20,23 +20,14 @@ import br.com.walmart.grafos.CalculadorMenorCaminho;
  */
 @Singleton
 @Startup
-@Local(ILogistica.class)
-public class LogisticaEjb implements ILogistica {
+@Local(ILogisticaServico.class)
+public class LogisticaServicoEjb implements ILogisticaServico {
 
 	private Malha malha = null;
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.com.walmart.ejb.ILogistica#getMalha()
-	 */
-	@Override
-	public Malha getMalha() {
-		return malha;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.com.walmart.ejb.ILogistica#setMalha(br.com.walmart.entidades.Malha)
+	 * @see br.com.walmart.ejb.ILogisticaServico#setMalha(br.com.walmart.entidades.Malha)
 	 */
 	@Override
 	public void setMalha(Malha malha) {
@@ -47,11 +38,11 @@ public class LogisticaEjb implements ILogistica {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.walmart.ejb.ILogistica#calcularMenorCaminho(br.com.walmart.dto
+	 * br.com.walmart.ejb.ILogisticaServico#calcularMenorCaminho(br.com.walmart.dto
 	 * .InformacaoEntrega)
 	 */
 	@Override
-	public RotaEntrega calcularMenorCaminho(ParametrosEntrega dto) throws PontoInexistenteException {
+	public RotaEntrega calcularRotaMenorCusto(ParametrosEntrega dto) throws PontoInexistenteException {
 		return CalculadorMenorCaminho.calcularMenorCaminho(malha, dto);
 	}
 

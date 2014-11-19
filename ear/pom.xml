@@ -26,11 +26,16 @@
       <plugin>
         <artifactId>maven-ear-plugin</artifactId>
         <configuration>
+          <defaultLibBundleDir>lib</defaultLibBundleDir>
           <modules>
             <ejbModule>
               <groupId>br.com.walmart</groupId>
               <artifactId>walmart-ejb</artifactId>
             </ejbModule>
+            <jarModule>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-log4j12</artifactId>
+            </jarModule>
             <webModule>
               <groupId>br.com.walmart</groupId>
               <artifactId>walmart-war</artifactId>
@@ -63,6 +68,13 @@
       <version>1.0.0-SNAPSHOT</version>
       <scope>compile</scope>
       <type>ejb</type>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.7</version>
+      <type>jar</type>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 

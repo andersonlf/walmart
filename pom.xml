@@ -10,7 +10,7 @@
   <name>walmart</name>
   
   <properties>
-    <wildfly.home>/home/anderson/sisbride/apps/wildfly-8.1.0.Final</wildfly.home>
+    <wildfly.home>/home/anderson/homeoffice/apps/wildfly-8.1.0.Final</wildfly.home>
   </properties>
 
   <scm>

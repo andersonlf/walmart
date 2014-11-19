@@ -105,13 +105,21 @@ public class RotaEntrega {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (String s : rota) {
-			sb.append(s);
+		for (int i = rota.size() - 1; i >= 0 ; i--) {
+			sb.append(rota.get(i));
 			sb.append(" ");
 		}
-		sb.append(distanciaRota == 0 ? "0" : (distanciaRota / autonomia) * valor);
-
+		sb.append(getCustoRota());
 		return sb.toString();
+	}
+
+	/**
+	 * Calcula o custo da rota.
+	 * 
+	 * @return Retorna o valor do custo da rota. 
+	 */
+	public Double getCustoRota() {
+		return distanciaRota == 0 ? 0 : (distanciaRota / autonomia) * valor;
 	}
 
 	/*

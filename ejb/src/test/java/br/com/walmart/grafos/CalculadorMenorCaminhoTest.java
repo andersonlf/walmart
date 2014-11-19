@@ -35,7 +35,7 @@ public class CalculadorMenorCaminhoTest {
 		dto.setValorLitroCombustivel(2.5);
 	
 		try {
-			assertEquals("D B A 6.25", CalculadorMenorCaminho.calcularMenorCaminho(malha, dto).toString());
+			assertEquals("A B D 6.25", CalculadorMenorCaminho.calcularMenorCaminho(malha, dto).toString());
 		} catch (PontoInexistenteException e) {
 			fail("Não deveria lançar exceção.");
 			e.printStackTrace();
@@ -54,7 +54,7 @@ public class CalculadorMenorCaminhoTest {
 		dto.setValorLitroCombustivel(2.5);
 		
 		try {
-			assertEquals("A 0", CalculadorMenorCaminho.calcularMenorCaminho(malha, dto).toString());
+			assertEquals("A 0.0", CalculadorMenorCaminho.calcularMenorCaminho(malha, dto).toString());
 		} catch (PontoInexistenteException e) {
 			fail("Não deveria lançar exceção.");
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class CalculadorMenorCaminhoTest {
 			assertEquals("A 0", CalculadorMenorCaminho.calcularMenorCaminho(malha, dto).toString());
 			fail("Deveria lançar exceção.");
 		} catch (PontoInexistenteException e) {
-			assertEquals("O ponto de destino '" + dto.getDestino() + "' especificado não existe!", e.getMessage());
+			assertEquals("O ponto '" + dto.getDestino() + "' especificado não existe!", e.getMessage());
 		}
 	}
 	
@@ -95,7 +95,7 @@ public class CalculadorMenorCaminhoTest {
 			assertEquals("A 0", CalculadorMenorCaminho.calcularMenorCaminho(malha, dto).toString());
 			fail("Deveria lançar exceção.");
 		} catch (PontoInexistenteException e) {
-			assertEquals("O ponto de origem '" + dto.getOrigem() + "' especificado não existe!", e.getMessage());
+			assertEquals("O ponto '" + dto.getOrigem() + "' especificado não existe!", e.getMessage());
 		}
 	}
 	
