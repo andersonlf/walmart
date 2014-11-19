@@ -12,6 +12,8 @@ public class ParametrosEntrega extends WalmartDto {
 	
 	private static final long serialVersionUID = 1L;
 
+	private String malha;
+
 	private String origem;
 	
 	private String destino;
@@ -19,6 +21,22 @@ public class ParametrosEntrega extends WalmartDto {
 	private double autonomiaVeiculo;
 	
 	private double valorLitroCombustivel;
+	
+	/**
+	 * Método JavaBean.
+	 * @return O malha.
+	 */
+	public String getMalha() {
+		return malha;
+	}
+
+	/**
+	 * Método JavaBean.
+	 * @param malha O novo malha.
+	 */
+	public void setMalha(String malha) {
+		this.malha = malha;
+	}
 
 	/**
 	 * Método JavaBean.
@@ -89,9 +107,10 @@ public class ParametrosEntrega extends WalmartDto {
 	 */
 	@Override
 	public String toString() {
-		return "ParametrosEntrega [origem=" + origem + ", destino=" + destino
-				+ ", autonomiaVeiculo="	+ autonomiaVeiculo + 
-				", valorLitroCombustivel=" + valorLitroCombustivel + "]";
+		return "ParametrosEntrega [malha=" + malha + ", origem=" + origem
+				+ ", destino=" + destino + ", autonomiaVeiculo="
+				+ autonomiaVeiculo + ", valorLitroCombustivel="
+				+ valorLitroCombustivel + "]";
 	}
 
 	/* (non-Javadoc)
@@ -105,6 +124,7 @@ public class ParametrosEntrega extends WalmartDto {
 		temp = Double.doubleToLongBits(autonomiaVeiculo);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((destino == null) ? 0 : destino.hashCode());
+		result = prime * result + ((malha == null) ? 0 : malha.hashCode());
 		result = prime * result + ((origem == null) ? 0 : origem.hashCode());
 		temp = Double.doubleToLongBits(valorLitroCombustivel);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -130,6 +150,11 @@ public class ParametrosEntrega extends WalmartDto {
 			if (other.destino != null)
 				return false;
 		} else if (!destino.equals(other.destino))
+			return false;
+		if (malha == null) {
+			if (other.malha != null)
+				return false;
+		} else if (!malha.equals(other.malha))
 			return false;
 		if (origem == null) {
 			if (other.origem != null)

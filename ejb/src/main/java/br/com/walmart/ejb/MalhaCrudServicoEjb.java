@@ -14,6 +14,7 @@ import br.com.walmart.dao.IMalhaCrudDao;
 import br.com.walmart.dao.IWalmartCrudDao;
 import br.com.walmart.dao.WalmartDaoFactory;
 import br.com.walmart.entidades.Malha;
+import br.com.walmart.exceptions.WalmartException;
 
 /**
  * Serviço EJB responsável pelas operações CRUD de uma malha.
@@ -38,6 +39,18 @@ public class MalhaCrudServicoEjb extends WalmartCrudServicoAbstract<Malha> imple
 	@PostConstruct
 	protected void inicializarDao() {
 		dao = WalmartDaoFactory.getInstance().criarMalhaCrudDao(entityManager);
+	}
+	
+	/* 
+	 * (non-Javadoc)
+	 * @see br.com.walmart.ejb.WalmartCrudServicoAbstract#incluir(br.com.walmart.entidades.WalmartEntidade)
+	 */
+	@Override
+	public Malha incluir(Malha objeto) throws WalmartException {
+		super.incluir(objeto);
+		entityManager.detach(objeto);
+		logistica.atualizarMalhas(objeto);
+		return objeto;
 	}
 
 	/* (non-Javadoc)

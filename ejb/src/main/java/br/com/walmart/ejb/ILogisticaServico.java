@@ -5,6 +5,7 @@ package br.com.walmart.ejb;
 
 import br.com.walmart.dto.ParametrosEntrega;
 import br.com.walmart.dto.RotaEntrega;
+import br.com.walmart.entidades.Malha;
 import br.com.walmart.exceptions.WalmartException;
 
 /**
@@ -13,6 +14,13 @@ import br.com.walmart.exceptions.WalmartException;
  * @author andersonlf@gmail.com
  */
 public interface ILogisticaServico extends IWalmartServico {
+	
+	/**
+	 * Atualiza o mapa de malhas na memória com a malha informada.
+	 * 
+	 * @param malha A malha para ser adicionada.
+	 */
+	public void atualizarMalhas(Malha malha);
 
 	/**
 	 * Método responsável por calcular a rota de menor custo. Uma rota de menor

@@ -171,10 +171,9 @@ public class Ponto extends WalmartEntidade {
 	 * @param nome3
 	 * @return
 	 */
-	public Trecho obterTrecho(String origem, String destino) {
+	public Trecho obterTrecho(String destino) {
 		for (Trecho trecho : trechos) {
-			if (trecho.getPontoDestino().getNome().equals(destino) 
-					&& trecho.getPontoOrigem().getNome().equals(origem)) {
+			if (trecho.getPontoDestino().getNome().equals(destino)) {
 				return trecho;
 			}
 		}

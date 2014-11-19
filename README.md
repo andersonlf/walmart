@@ -37,27 +37,40 @@ Aplicativo JEE 7.
 
 **Softwares necessários**
 
-  * Oracle JDK 8
+  * Oracle JDK 8u25
   * Wildfly 8.1.0.Final
   * Apache Maven 3.2.3
-  * H2 Database
+  * H2 Database 1.3.176
 
 
 **Instalação**
 
+  1. Acesse http://www.oracle.com/technetwork/java/javase/downloads/index.html e faça o download do Oracle JDK 8u25.
+  1. Realize a instalação e crie a variável de ambiente JAVA_HOME apontando para a raiz do diretório onde o Oracle JDK 8u25 foi instalado.
   1. Acesse http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip e realize o download do servidor de aplicação Wildfly 8.1.0.Final
   1. Descompacte o arquivo baixado na raiz do diretório home do usuário. A partir de agora esse diretório será chamado JBOSS_HOME.
-  1. 
+  1. Acesse http://maven.apache.org e realize o download do Apache Maven 3.2.3
+  1. Descompacte o arquivo baixado na raiz do diretório home do usuário.
+  1. Crie a variável de ambiente MAVEN_HOME apontando para a raiz do diretório onde o Apache Maven foi descompactado.
+  1. Acesse http://www.h2database.com/h2-2014-04-05.zip e realize o download da H2 Database 1.3.176.
+  1. Descompacte o arquivo no diretório home do usuário. A partir de agora esse diretório será chamado H2_HOME.
 
 
 **Execução**
 
-Como executar.
+  * Para cadastrar uma malha 
+
+
+**Restrições, premissas e suposições**
+
+  1. Não existe duas malhas com mesmo nome.
+  1. Não existe dois pontos com mesmo nome na mesma malha.
+  1. Só existe uma e apenas uma distância entre um ponto de origem A e um ponto de destino B pertencentes a uma malha.
+  1. O cálculo da rota de menor custo é realizado apenas se e somente se o ponto de origem e o ponto de destino pertencem a mesma malha.
 
 
 **TODO**
 
-  1. Criar script DDL de banco de dados
   1. Explicar a arquitetura
   1. Tutorial sobre como instalar:
     * como configurar o banco
@@ -71,6 +84,7 @@ Como executar.
   
 
 **Concluídos**
+  1. Criar script DDL de banco de dados
   1. Criar DAO
   1. Alterar o algoritmo de dijkstra
   1. Tratar exceção quando uma malha já estiver incluída

@@ -7,11 +7,10 @@ import javax.ejb.EJB;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import br.com.walmart.ejb.IMalhaCrudServico;
 import br.com.walmart.entidades.Malha;
@@ -24,23 +23,20 @@ import br.com.walmart.processador.ProcessadorMalhaLogistica;
  * @author andersonlf@gmail.com
  */
 @Path("malha")
-public class MalhaResource {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(MalhaResource.class);
+public class MalhaResource extends WalmartResource {
 
 	@Context
 	private UriInfo context;
-	
+
 	@EJB
 	private IMalhaCrudServico malhaCrudServico;
 
 	public MalhaResource() {
 	}
-	
+
 	/**
-	 * Método responsável por incluir uma malha. 
-	 * TODO D situações de erro 
-	 * TODO D limites e valores aceitáveis
+	 * Método responsável por incluir uma malha. TODO D situações de erro TODO D
+	 * limites e valores aceitáveis
 	 * 
 	 * @param nome
 	 *            Nome da malha a ser incluída.
@@ -58,32 +54,24 @@ public class MalhaResource {
 	 *            </pre>
 	 */
 	@POST
-	public String incluir(@FormParam("nome") String nome, @FormParam("malha") String malha) {
+	@Produces(MediaType.TEXT_HTML)
+	public String incluir(@FormParam("nome") String nome,
+			@FormParam("malha") String malha) {
 		getLogger().info("> incluir");
-		getLogger().debug(">> parametros: nome='" + nome + "' malha='" + malha + "'");
+		getLogger().info(
+				">> parametros: nome='" + nome + "' malha='" + malha + "'");
 		Malha malhaObject = ProcessadorMalhaLogistica.processar(nome, malha);
-		getLogger().debug(">> malha criada: " + malhaObject);
-		
-		String retorno = null;
+		getLogger().info(">> malha criada: " + malhaObject);
+
+		String retorno = "1";
 		try {
 			malhaCrudServico.incluir(malhaObject);
-			retorno = "Malha incluída com sucesso!";
 		} catch (WalmartException e) {
-			retorno = e.getMessage();
+			retorno = "0";
 			getLogger().error(e.getMessage(), e);
 		}
-		
+
 		return retorno;
-	}
-
-
-	/*
-	 * Método JavaBean para obter o logger.
-	 * 
-	 * @return O logger desta classe.
-	 */
-	private static Logger getLogger() {
-		return LOGGER;
 	}
 
 }

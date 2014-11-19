@@ -5,8 +5,6 @@ package br.com.walmart.processador;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import br.com.walmart.entidades.Malha;
@@ -174,27 +172,6 @@ public class ProcessadorMalhaLogisticaTest {
 		assertEquals(Double.valueOf(5), malha.getPontos().get(0).getTrechos().get(0).getDistancia());
 	}
 	
-	/**
-	 * Test method for {@link br.com.walmart.processador.ProcessadorMalhaLogistica#processar(java.util.List)
-	 */
-	@Test
-	public void testProcessar15() {
-		StringBuilder sb1 = new StringBuilder();
-		sb1.append("A B 10 \n");
-		
-		StringBuilder sb2 = new StringBuilder();
-		sb2.append("A B 5 \n");
-		
-		Malha malha = ProcessadorMalhaLogistica.processar("Nome válido", sb1.toString());
-		Malha malha2 = ProcessadorMalhaLogistica.processar("Nome válido2", sb2.toString());
-		
-		Malha malhaResultado = ProcessadorMalhaLogistica.processar(Arrays.asList(malha, malha2));
-		assertEquals("Nome válido", malhaResultado.getNome());
-		assertEquals(2, malha.getPontos().size());
-		assertEquals(Double.valueOf(5), malha.getPontos().get(0).getTrechos().get(0).getDistancia());
-	}
-	
-
 	/*
 	 * Testa se o ponto A foi corretamente carregado.
 	 * 
