@@ -32,9 +32,9 @@ Solução
 
 **Arquitetura**
 
-O aplicativo foi desenvolvido usando a Plataforma JEE 7 - Java Enterprise Edition, empregando APIs robustas para persitência, como a Java Persistence API (JPA), e a recente Java API for RESTful Web Services (JAX-RS) para construção de Web Services. Além dessas APIs, também foi utilizada o Simple Logging Facade for Java (SL4J), como facade para o Log4j, renomado framework para logging de aplicações. Para criação de testes unitários foi utilizado o JUnit, na versão 4.11.
+O projeto foi desenvolvido usando a Plataforma JEE 7 - Java Enterprise Edition, empregando APIs robustas para persistência, como a Java Persistence API (JPA), e a recente Java API for RESTful Web Services (JAX-RS) para construção de Web Services. Além dessas, também foi utilizado o Simple Logging Facade for Java (SL4J), como facade para o Log4j, renomado framework para logging de aplicações. Para criação de testes unitários foi utilizado o JUnit, na versão 4.11.
 
-Os componentes da solução são: um módulo EJB (JAR) e um módulo WAR empacotados como um EAR. O módulo WAR publica os RESTFul Web Services enquanto o módulo EJB possui a unidade de persistência, entidades, serviços EJB, classes utilitárias, singletons, DTOs e DAOs.
+Os componentes da solução são: um módulo EJB (JAR) e um módulo WAR empacotados como um EAR. O módulo WAR publica os RESTFul Web Services enquanto o módulo EJB possui a unidade de persistência, entidades, serviços EJB, classes utilitárias, classes de exceções, singletons, DTOs e DAOs.
 
 A arquitetura provê ainda um conjunto de super classes que fornece infraestrutura mínima para o desenvolvimento de novas funcionalidades com rapidez e segurança tendo apoio na parametrização de objetos com mesmo comportamento.
 
@@ -42,11 +42,11 @@ Dessa forma, uma requisição típica atendida pelo sistema tem o seguinte ciclo
   
   1. Recepção no RESTFul Web Services, hospedado no contexto web da aplicação.
   1. No momento de implantação a Dependency Injection (DI) disponibiliza o serviço EJB para chamada a partir do resource.
-  1. O serviço EJB é invocado e uma transação é aberta.
-  1. No serviço EJB, no momento da implantação, a Dependency Injection (DI) disponibiliza outros recursos necessários para construção do EJB, por exemplo o Entity Manager associado a unidade de persistência do módulo. Outros recursos são criados, como o DAO.
+  1. O serviço EJB é invocado e uma transação é aberta, já no contexto de negócio.
+  1. No serviço EJB, no momento da implantação, a Dependency Injection (DI) disponibiliza outros recursos necessários para construção do EJB, por exemplo o Entity Manager associado a unidade de persistência do módulo. Outros recursos também são criados, como o DAO.
   1. Uma chamada ao método de persistência é realizada.
   1. O DAO executa a operação e retorna para o serviço EJB.
-  1. O EJB retorna para o Web Service que retorna para o cliente. 
+  1. O EJB retorna para o Web Service que, por sua vez, retorna para o cliente. 
 
 
 **Softwares necessários**
