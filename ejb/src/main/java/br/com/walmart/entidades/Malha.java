@@ -150,22 +150,39 @@ public class Malha extends WalmartEntidade {
 	}
 
 	/**
-	 * TODO
-	 * @param p
-	 * @return
+	 * Método para responder se a malha contém um ponto especificado.
+	 * Um ponto pertence a malha se ele está entre seus pontos.
+	 * 
+	 * @param ponto O ponto a ser verificado.
+	 * @return <code>true</code> se o ponto pertence a essa malha.
 	 */
-	public boolean contemPonto(Ponto p) {
-		return getPontos().contains(p);
+	public boolean contemPonto(Ponto ponto) {
+		return getPontos().contains(ponto);
 	}
 	
 	/**
-	 * TODO
-	 * @param ponto
+	 * Método usado para adicionar um ponto a malha.
+	 * 
+	 * @param ponto O ponto a ser adicionado na malha.
 	 */
 	public void addPonto(Ponto ponto) {
 		getPontos().add(ponto);
 	}
 	
+	/**
+	 * Método usado para obter um ponto de uma malha.
+	 * @param nomePonto O nome do ponto a ser recuperado.
+	 * @return Retorna o ponto ou <code>null</code> caso o ponto não exista.
+	 */
+	public Ponto obterPonto(String nomePonto) {
+		for (Ponto ponto : getPontos()) {
+			if (ponto.getNome().equals(nomePonto)) {
+				return ponto;
+			}
+		}
+		
+		return null;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -211,21 +228,6 @@ public class Malha extends WalmartEntidade {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
-	}
-
-	/**
-	 * TODO
-	 * @param nome2
-	 * @return
-	 */
-	public Ponto obterPonto(String nomeMalha) {
-		for (Ponto ponto : getPontos()) {
-			if (ponto.getNome().equals(nomeMalha)) {
-				return ponto;
-			}
-		}
-		
-		return null;
 	}
 
 }

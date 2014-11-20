@@ -65,14 +65,14 @@ public class CalculadorMenorCaminho {
 	 */
 	private static Ponto obterPonto(Malha malha, String nomePonto)
 			throws WalmartException {
-		for (Ponto ponto : malha.getPontos()) {
-			if (ponto.getNome().equals(nomePonto)) {
-				return ponto;
-			}
+		Ponto ponto = malha.obterPonto(nomePonto);
+		
+		if (ponto == null) {
+			throw new WalmartException("O ponto '" + nomePonto
+					+ "' especificado não existe!");
 		}
-
-		throw new WalmartException("O ponto '" + nomePonto
-				+ "' especificado não existe!");
+		
+		return ponto;
 	}
 
 	/*
@@ -104,7 +104,7 @@ public class CalculadorMenorCaminho {
 			Ponto pontoMenorDistancia = recuperarPontoMenorDistancia(distancias, visitados);
 			
 			if (pontoMenorDistancia == null) {
-				throw new WalmartException("Não existe rota da origem '" + origem + "' para o destino '" + destino + "'!");
+				throw new WalmartException("Não existe rota da origem '" + origem + "' para o destino '" + destino + "' ou existem pontos que não possuem ligações entre eles!");
 			}
 			
 			calcularDistanciasAntecessores(pontoMenorDistancia, distancias,

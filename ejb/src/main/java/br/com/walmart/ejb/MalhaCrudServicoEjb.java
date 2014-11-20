@@ -48,7 +48,6 @@ public class MalhaCrudServicoEjb extends WalmartCrudServicoAbstract<Malha> imple
 	@Override
 	public Malha incluir(Malha objeto) throws WalmartException {
 		super.incluir(objeto);
-		entityManager.detach(objeto);
 		logistica.atualizarMalhas(objeto);
 		return objeto;
 	}

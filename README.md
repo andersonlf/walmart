@@ -82,13 +82,13 @@ Dessa forma, uma requisição típica atendida pelo sistema tem o seguinte ciclo
     1. Descompacte o arquivo baixado na raiz do diretório home do usuário. A partir de agora esse diretório será chamado JBOSS_HOME.
     1. Acesse o diretório JBOSS_HOME/bin e execute o script standalone.sh ou standalone.bat.
     1. Após execução desse script a interface administrativa do servidor de aplicação Wildfly estará acessível a partir do endereço http://localhost:9990/console. Para acessar a interface administrativa é necessário criar um usuário e senha.
-    1. Para criar o usuário e senha execute o script add-user.sh.
+    1. Para criar o usuário e senha execute o script JBOSS_HOME/bin/add-user.sh.
     1. Para a pergunta What type of user do you wish to add? digite a opção _a_ e aperte _enter_.
     1. Digite admin para o Username.
     1. Digite @dmin123 para o Password.
     1. Tecle _enter_ para a pergunta What groups do you want this user to belong to?
-    1. Digite yes para a Is this correct yes/no?
-    1. Responda no para a pergunta Is this new user going to be used for one AS process to connect to another AS process?
+    1. Digite _yes_ para a Is this correct yes/no?
+    1. Responda _no_ para a pergunta Is this new user going to be used for one AS process to connect to another AS process?
     1. O usuário foi criado.
     1. Acesse a http://localhost:9990/console e realize login com o usuário que acabou de ser criado.
     1. Após o login, na seção Create a Datasources, clique em Datasources.

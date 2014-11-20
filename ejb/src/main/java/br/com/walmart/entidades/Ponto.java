@@ -107,6 +107,42 @@ public class Ponto extends WalmartEntidade {
 	public void setTrechos(List<Trecho> trechos) {
 		this.trechos = trechos;
 	}
+	
+	/**
+	 * Método usado para verificar se um ponto contém um trecho especificado.
+	 * O trecho especificado deve obrigatoriamente ter mesma origem e mesmo destino.
+	 * 
+	 * @param trecho O trecho a ser verificado.
+	 * @return <code>true</code> se o trecho está presente no ponto.
+	 */
+	public boolean contemTrecho(Trecho trecho) {
+		return getTrechos().contains(trecho);
+	}
+
+	/**
+	 * Método usado para adicionar um trecho ao ponto.
+	 * 
+	 * @param trecho O trecho a ser adicionado.
+	 */
+	public void addTrecho(Trecho trecho) {
+		getTrechos().add(trecho);
+	}
+
+	/**
+	 * Método usado para recuperar um trecho com o destio especificado.
+	 * 
+	 * @param destino O nome do destino.
+	 * @return O trecho com destino especificado ou <code>null</code> caso não exista.
+	 */
+	public Trecho obterTrecho(String destino) {
+		for (Trecho trecho : trechos) {
+			if (trecho.getPontoDestino().getNome().equals(destino)) {
+				return trecho;
+			}
+		}
+		
+		return null;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -146,39 +182,6 @@ public class Ponto extends WalmartEntidade {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
-	}
-
-	/**
-	 * TODO
-	 * @param trecho
-	 * @return
-	 */
-	public boolean contemTrecho(Trecho trecho) {
-		return getTrechos().contains(trecho);
-	}
-
-	/**
-	 * TODO
-	 * @param trecho
-	 */
-	public void addTrecho(Trecho trecho) {
-		getTrechos().add(trecho);
-	}
-
-	/**
-	 * TODO
-	 * @param nome2
-	 * @param nome3
-	 * @return
-	 */
-	public Trecho obterTrecho(String destino) {
-		for (Trecho trecho : trechos) {
-			if (trecho.getPontoDestino().getNome().equals(destino)) {
-				return trecho;
-			}
-		}
-		
-		return null;
 	}
 
 }

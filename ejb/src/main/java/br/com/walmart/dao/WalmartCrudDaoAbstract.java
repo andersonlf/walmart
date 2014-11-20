@@ -46,6 +46,7 @@ public abstract class WalmartCrudDaoAbstract<T extends WalmartEntidade> extends
 		verificarDuplicidade(objeto);
 		getEntityManager().persist(objeto);
 		getEntityManager().flush();
+		getEntityManager().detach(objeto);
 		return objeto;
 	}
 
