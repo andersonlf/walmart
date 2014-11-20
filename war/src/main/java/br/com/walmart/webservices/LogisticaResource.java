@@ -51,8 +51,6 @@ public class LogisticaResource extends WalmartResource {
 	 * destino D, autonomia 10, valor do litro 2,50; a resposta seria a rota A B
 	 * D com custo de 6,25.
 	 * 
-	 * TODO D situações de erro TODO D limites e valores aceitáveis
-	 * 
 	 * @param malha
 	 *            O nome da malha.
 	 * @param origem

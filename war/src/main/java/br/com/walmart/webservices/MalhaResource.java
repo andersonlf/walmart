@@ -35,8 +35,7 @@ public class MalhaResource extends WalmartResource {
 	}
 
 	/**
-	 * Método responsável por incluir uma malha. TODO D situações de erro TODO D
-	 * limites e valores aceitáveis
+	 * Método responsável por incluir uma malha. 
 	 * 
 	 * @param nome
 	 *            Nome da malha a ser incluída.
