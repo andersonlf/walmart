@@ -96,6 +96,7 @@ Dessa forma, uma requisição típica atendida pelo sistema tem o seguinte ciclo
     1. Informe WalmartDS no campo Name e java:jboss/datasources/WalmartDS no campo JNDI Name e clique em Next.
     1. Na tela seguinte verifique se o driver h2 está selecionado e clique em Next.
     1. Na próxima tela, no campo Connection URL digite a JDBC URL informada na configuração do H2 Database 1.3.176, informa também usuário e senha. Clique em Test Connection. A mensagem Successfully created JDBC connection deve ser exibida. Clique Ok e em seguida em Done.
+    1. Em seguida, selecione o datasource criado e clique em Enable.
     1. O servidor de aplicações está pronto!
 
   * Apache Maven 3.2.3
